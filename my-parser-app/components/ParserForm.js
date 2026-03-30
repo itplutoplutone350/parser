@@ -51,7 +51,7 @@ export default function ParserForm() {
 
   return (
     <div style={{ maxWidth: "700px" }}>
-      <h2>Incolla il testo da analizzare</h2>
+      <h2>Incolla testo output intpfd da analizzare</h2>
 
       <textarea
         value={inputText}
