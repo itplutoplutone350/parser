@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Text Parser Demo",
+  title: "Italtel SSW Intpfd Text Parser ver. 1.0 30/03/2026",
   description: "Parsing di testo con formattazione fissa",
 };
 
