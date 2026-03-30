@@ -28,6 +28,7 @@ export default function parseFixedFormat(text) {
       DN ?? "",
       ip1 ?? "",
       ip2 ?? "",
+      domain ?? "",
       gruppo ?? ""
     ].join(",");
 
