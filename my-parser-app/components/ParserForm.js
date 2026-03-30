@@ -6,24 +6,28 @@ import parseFixedFormat from "@/lib/parser";
 export default function ParserForm() {
   const [inputText, setInputText] = useState("");
   const [results, setResults] = useState([]);
+  const [csvOutput, setCsvOutput] = useState("");
 
   const handleParse = () => {
     const parsed = parseFixedFormat(inputText);
-    setResults(parsed);
+
+    // ✅ Aggiungo virgolette a ogni campo dell’output
+    const quoted = parsed.map(line => {
+      const fields = line.split(",");
+      const quotedFields = fields.map(f => `"${f}"`);
+      return quotedFields.join(",");
+    });
+
+    setResults(quoted);
+    setCsvOutput(quoted.join("\n"));
   };
 
   const handleCopyCsv = () => {
-    if (!Array.isArray(results) || results.length === 0) return;
+    if (!csvOutput) return;
 
-    const csvText = results.join("\n");
-
-    navigator.clipboard.writeText(csvText)
-      .then(() => {
-        alert("CSV copiato negli appunti!");
-      })
-      .catch((err) => {
-        console.error("Errore nella copia:", err);
-      });
+    navigator.clipboard.writeText(csvOutput)
+      .then(() => alert("CSV copiato negli appunti!"))
+      .catch(err => console.error("Errore copia CSV:", err));
   };
 
   return (
@@ -33,7 +37,7 @@ export default function ParserForm() {
       <textarea
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        placeholder={`Incolla qui l'intero dump...`}
+        placeholder={`Incolla qui il dump...`}
         style={{ width: "100%", height: "260px", marginBottom: "10px" }}
       />
 
@@ -41,14 +45,21 @@ export default function ParserForm() {
         Esegui parsing
       </button>
 
-      {Array.isArray(results) && results.length > 0 && (
+      {results.length > 0 && (
         <>
           <button onClick={handleCopyCsv} style={{ marginTop: "10px" }}>
             Copia CSV
           </button>
 
-          <h3>Risultati</h3>
-          <ul>
+          <h3>Risultati (CSV con virgolette)</h3>
+
+          <textarea
+            value={csvOutput}
+            readOnly
+            style={{ width: "100%", height: "200px", marginTop: "10px" }}
+          />
+
+          <ul style={{ marginTop: "20px" }}>
             {results.map((line, index) => (
               <li key={index}>
                 <code>{line}</code>
