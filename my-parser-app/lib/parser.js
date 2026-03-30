@@ -10,26 +10,27 @@ export default function parseFixedFormat(text) {
   for (const block of blocks) {
 
     // ✅ modulo estratto correttamente anche dopo lo split
-    // matcha la prima riga del blocco: "= 6   Numero porta = 536 ..."
     const modulo = extract(block, /^=\s*(\d+)/m);
 
-    // ✅ gli altri campi restano invariati
+    // ✅ altri campi invariati
     const porta  = extract(block, /Numero porta\s*=\s*(\d+)/i);
     const DN     = extract(block, /DN\s*=\s*([0-9]+)/i);
     const ip1    = extract(block, /IP_ADDR\s*=\s*([0-9./]+)/i);
     const ip2    = extract(block, /IP_ADDR2\s*=\s*([0-9./]+)/i);
     const gruppo = extract(block, /Nome gruppo\s*=\s*([^\n]+)/i);
+
+    // ✅ nuovo campo: domain
     const domain = extract(block, /domain\s*=\s*([^\n]+)/i);
 
-    // ✅ costruiamo una riga CSV senza virgolette (la UI le aggiungerà)
+    // ✅ riga CSV senza virgolette (la UI le aggiunge)
     const line = [
       modulo ?? "",
       porta ?? "",
       DN ?? "",
       ip1 ?? "",
       ip2 ?? "",
-      domain ?? "",
-      gruppo ?? ""
+      gruppo ?? "",
+      domain ?? ""
     ].join(",");
 
     rows.push(line);
