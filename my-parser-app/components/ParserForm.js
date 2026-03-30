@@ -86,3 +86,13 @@ export default function ParserForm() {
           <ul style={{ marginTop: "20px" }}>
             {results.map((line, index) => (
               <li key={index}>
+                <code>{line}</code>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+}
+``
