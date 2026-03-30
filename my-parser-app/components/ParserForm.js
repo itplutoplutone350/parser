@@ -7,38 +7,35 @@ export default function ParserForm() {
   const [inputText, setInputText] = useState("");
   const [results, setResults] = useState([]);
 
-  const fieldsMap = {
-    nome: "Nome",
-    eta: "Età",
-    citta: "Città",
-    lavoro: "Professione"
-  };
-
   const handleParse = () => {
-    const parsed = parseFixedFormat(inputText, fieldsMap);
+    const parsed = parseFixedFormat(inputText);
     setResults(parsed);
   };
 
   return (
-    <div style={{ maxWidth: "600px" }}>
+    <div style={{ maxWidth: "700px" }}>
       <h2>Incolla il testo da analizzare</h2>
 
       <textarea
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        placeholder={`Nome: Mario Rossi\nEtà: 35\nCittà: Torino\nProfessione: Designer`}
+        placeholder={`Incolla qui l'intero dump...`}
+        style={{ width: "100%", height: "260px", marginBottom: "10px" }}
       />
 
       <button onClick={handleParse}>Esegui parsing</button>
 
-      {Array.isArray(results) && (
-        <ul>
-          {results.map((item, index) => (
-            <li key={index}>
-              <strong>{item.field}:</strong> {item.value}
-            </li>
-          ))}
-        </ul>
+      {Array.isArray(results) && results.length > 0 && (
+        <>
+          <h3>Risultati</h3>
+          <ul>
+            {results.map((line, index) => (
+              <li key={index}>
+                <code>{line}</code>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
