@@ -8,7 +8,7 @@ export default function ParserForm() {
   const [results, setResults] = useState([]);
   const [csvOutput, setCsvOutput] = useState("");
 
-  const CSV_HEADER = `"modulo","porta","DN","IP_ADDR","IP_ADDR2","NomeGruppo"`;
+  const CSV_HEADER = `"modulo","porta","DN","IP_ADDR","IP_ADDR2","NomeGruppo","Dominio"`;
 
   const handleParse = () => {
     const parsed = parseFixedFormat(inputText);
