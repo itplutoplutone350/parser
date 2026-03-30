@@ -19,6 +19,7 @@ export default function parseFixedFormat(text) {
     const ip1    = extract(block, /IP_ADDR\s*=\s*([0-9./]+)/i);
     const ip2    = extract(block, /IP_ADDR2\s*=\s*([0-9./]+)/i);
     const gruppo = extract(block, /Nome gruppo\s*=\s*([^\n]+)/i);
+    const domain = extract(block, /domain\s*=\s*([^\n]+)/i);
 
     // ✅ costruiamo una riga CSV senza virgolette (la UI le aggiungerà)
     const line = [
